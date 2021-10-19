@@ -39,41 +39,53 @@ class WordGuesserGame
 
   def guess(alpha)
     if alpha == nil
-	raise ArgumentError
+	    raise ArgumentError
     elsif !is_alpha(alpha)
-	raise ArgumentError
+	    raise ArgumentError
     elsif alpha >= 'A' && alpha <= 'Z'
-	return false
+	    return false
     else
     	if word.index(alpha) != nil
-		if correct_list.index(alpha) == nil
-			@guesses = alpha
-			@correct_list.concat(alpha)
-			for i in 0..word.length-1
-				if word[i] == alpha
-					@word_with_guesses[i] = alpha
-				end
-			end
-			if word_with_guesses.index('-') == nil
-				@check_win_or_lose = :win
-			end
-		else
-			return false
-		end
+    		if correct_list.index(alpha) == nil
+    			@guesses = alpha
+    			@correct_list.concat(alpha)
+    			for i in 0..word.length-1
+    				if word[i] == alpha
+    					@word_with_guesses[i] = alpha
+    				end
+    			end
+    			if word_with_guesses.index('-') == nil
+    				@check_win_or_lose = :win
+    			end
+    		else
+    			return false
+    		end
     	else
-		if wrong_list.index(alpha) == nil
-			@wrong_guesses = alpha
-			@wrong_list.concat(alpha)
-			@wrong_count = @wrong_count + 1
-			if wrong_count >= 7
-				@check_win_or_lose = :lose
-			end
-		else
-			return false
-		end
-    	end
+    		if wrong_list.index(alpha) == nil
+    			@wrong_guesses = alpha
+    			@wrong_list.concat(alpha)
+    			@wrong_count = @wrong_count + 1
+    			if wrong_count >= 7
+    				@check_win_or_lose = :lose
+    			end
+    		else
+    			return false
+    		end
+      end
     end
   end 
+
+  def is_win()
+    if check_win_or_lose == :win
+      return true
+    end
+  end
+
+  def is_lose()
+    if check_win_or_lose == :win
+      return true
+    end
+  end
 
   # You can test it by installing irb via $ gem install irb
   # and then running $ irb -I. -r app.rb
