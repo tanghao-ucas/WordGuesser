@@ -36,11 +36,9 @@ class WordGuesserGame
 		  return false
 	  end
   end 
-
+ 
   def guess(alpha)
-    if alpha == nil
-	    raise ArgumentError
-    elsif !is_alpha(alpha)
+    if alpha == nil || !is_alpha(alpha)
 	    raise ArgumentError
     elsif alpha >= 'A' && alpha <= 'Z'
 	    return false
