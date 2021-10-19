@@ -5,9 +5,75 @@ class WordGuesserGame
 
   # Get a word from remote "random word" service
 
+
+  attr_accessor :word
+  attr_accessor :guesses
+  attr_accessor :wrong_guesses
+  attr_accessor :correct_list
+  attr_accessor :wrong_list
+  attr_accessor :word_with_guesses
+  attr_accessor :wrong_count 
+  attr_accessor :check_win_or_lose
+
   def initialize(word)
     @word = word
+    @guesses = ""
+    @wrong_guesses = ""
+    @correct_list = ""
+    @wrong_list = ""
+    @word_with_guesses = ""
+    @wrong_count = 0
+    @check_win_or_lose = :play
+    for i in 1..word.length
+	    word_with_guesses.concat('-')
+    end
   end
+
+  def is_alpha(c)
+	  if (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
+		  return true
+	  else 
+		  return false
+	  end
+  end 
+
+  def guess(alpha)
+    if alpha == nil
+	raise ArgumentError
+    elsif !is_alpha(alpha)
+	raise ArgumentError
+    elsif alpha >= 'A' && alpha <= 'Z'
+	return false
+    else
+    	if word.index(alpha) != nil
+		if correct_list.index(alpha) == nil
+			@guesses = alpha
+			@correct_list.concat(alpha)
+			for i in 0..word.length-1
+				if word[i] == alpha
+					@word_with_guesses[i] = alpha
+				end
+			end
+			if word_with_guesses.index('-') == nil
+				@check_win_or_lose = :win
+			end
+		else
+			return false
+		end
+    	else
+		if wrong_list.index(alpha) == nil
+			@wrong_guesses = alpha
+			@wrong_list.concat(alpha)
+			@wrong_count = @wrong_count + 1
+			if wrong_count >= 7
+				@check_win_or_lose = :lose
+			end
+		else
+			return false
+		end
+    	end
+    end
+  end 
 
   # You can test it by installing irb via $ gem install irb
   # and then running $ irb -I. -r app.rb
